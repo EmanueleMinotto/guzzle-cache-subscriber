@@ -18,19 +18,9 @@ use GuzzleHttp\Subscriber\Cache\Utils;
 class CacheSubscriber implements SubscriberInterface
 {
     /**
-     * @var Cache
-     */
-    private $cache;
-
-    /**
-     * @var RequestInterface
-     */
-    private $request;
-
-    /**
      * Constructor with optional cache strategy.
      *
-     * @param Cache|null $cache
+     * @param Cache|null $cache Doctrine cache implementation.
      */
     public function __construct(Cache $cache = null)
     {
@@ -40,11 +30,15 @@ class CacheSubscriber implements SubscriberInterface
     /**
      * Cache setter.
      *
-     * @param Cache $cache
+     * @param Cache $cache New doctrine cache implementation.
+     *
+     * @return self
      */
     public function setCache(Cache $cache)
     {
         $this->cache = $cache;
+
+        return $this;
     }
 
     /**
@@ -58,7 +52,11 @@ class CacheSubscriber implements SubscriberInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Subscriber events.
+     *
+     * @link http://docs.guzzlephp.org/en/latest/events.html#working-with-request-events
+     *
+     * @return array
      */
     public function getEvents()
     {
@@ -71,7 +69,9 @@ class CacheSubscriber implements SubscriberInterface
     /**
      * Check if the request is cached and intercept it.
      *
-     * @param BeforeEvent $event
+     * @param BeforeEvent $event Guzzle 4/5 event.
+     *
+     * @return void
      */
     public function onBefore(BeforeEvent $event)
     {
@@ -96,7 +96,9 @@ class CacheSubscriber implements SubscriberInterface
     /**
      * When the request is completed, it's cached.
      *
-     * @param CompleteEvent $event
+     * @param CompleteEvent $event Guzzle 4/5 event.
+     *
+     * @return void
      */
     public function onComplete(CompleteEvent $event)
     {
@@ -121,32 +123,32 @@ class CacheSubscriber implements SubscriberInterface
     }
 
     /**
-     * Return the TTL to use when caching a Response.
+     * Return the TTL to use when caching a Response (extracted from guzzle/cache-subscriber).
      *
-     * Extracted from guzzle/cache-subscriber.
-     *
-     * @param ResponseInterface $response
+     * @param ResponseInterface $response Guzzle 4/5 response message.
      *
      * @link https://github.com/guzzle/cache-subscriber/blob/master/src/CacheStorage.php
      *
-     * @return int
+     * @return integer
      */
     private function getTtl(ResponseInterface $response)
     {
         $ttl = 0;
 
         if ($response->getHeader('Cache-Control')) {
-            $maxAge = Utils::getDirective($response, 'max-age');
-            if (is_numeric($maxAge)) {
-                $ttl += $maxAge;
-            }
+            return $ttl;
+        }
 
-            // According to RFC5861 stale headers are *in addition* to any
-            // max-age values.
-            $stale = Utils::getDirective($response, 'stale-if-error');
-            if (is_numeric($stale)) {
-                $ttl += $stale;
-            }
+        $maxAge = Utils::getDirective($response, 'max-age');
+        if (is_numeric($maxAge)) {
+            $ttl += $maxAge;
+        }
+
+        // According to RFC5861 stale headers are *in addition* to any
+        // max-age values.
+        $stale = Utils::getDirective($response, 'stale-if-error');
+        if (is_numeric($stale)) {
+            $ttl += $stale;
         }
 
         return $ttl;

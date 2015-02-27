@@ -9,34 +9,37 @@ use GuzzleHttp\Client;
 use PHPUnit_Framework_TestCase;
 
 /**
+ * Subscriber test class.
+ *
+ * @author Emanuele Minotto <minottoemanuele@gmail.com>
+ *
  * @coversDefaultClass \EmanueleMinotto\Guzzle\CacheSubscriber
  */
 class CacheSubscriberTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var Client
-     */
-    protected $client;
-
-    /**
-     * @var CacheSubscriber
-     */
-    protected $subscriber;
-
-    /**
-     * {@inheritdoc}
+     * Attributes initialization before every test.
+     *
+     * @return void
      */
     protected function setUp()
     {
-        $this->client = new Client();
-        $this->subscriber = new CacheSubscriber();
+        $client =& $this->client;
 
-        $this->client->getEmitter()->attach($this->subscriber);
+        $client = new Client();
+        $subscriber = new CacheSubscriber();
+
+        $emitter = $client->getEmitter();
+        $emitter->attach($subscriber);
     }
 
     /**
-     * @covers EmanueleMinotto\Guzzle\CacheSubscriber::setCache
-     * @covers EmanueleMinotto\Guzzle\CacheSubscriber::getCache
+     * Test cache accessors (get, set).
+     *
+     * @covers ::setCache
+     * @covers ::getCache
+     *
+     * @return void
      */
     public function testCacheAccessors()
     {
@@ -45,29 +48,38 @@ class CacheSubscriberTest extends PHPUnit_Framework_TestCase
             new ArrayCache(),
         ]);
 
-        $this->subscriber->setCache($cache);
+        $subscriber = new CacheSubscriber();
+        $subscriber->setCache($cache);
 
-        $getterValue = $this->subscriber->getCache();
+        $getterValue = $subscriber->getCache();
 
         $this->assertInstanceOf('Doctrine\Common\Cache\Cache', $getterValue);
         $this->assertSame($cache, $getterValue);
     }
 
     /**
-     * @covers EmanueleMinotto\Guzzle\CacheSubscriber::getEvents
-     * @todo   Implement testGetEvents().
+     * Test Guzzle subscriber events.
+     *
+     * @covers ::getEvents
+     *
+     * @return void
      */
     public function testGetEvents()
     {
-        $events = $this->subscriber->getEvents();
+        $subscriber = new CacheSubscriber();
+        $events = $subscriber->getEvents();
 
         $this->assertNotEmpty($events);
         $this->assertInternalType('array', $events);
     }
 
     /**
-     * @covers EmanueleMinotto\Guzzle\CacheSubscriber::onBefore
-     * @covers EmanueleMinotto\Guzzle\CacheSubscriber::onComplete
+     * Subscriber functional test.
+     *
+     * @covers ::onBefore
+     * @covers ::onComplete
+     *
+     * @return void
      */
     public function testEvents()
     {
@@ -75,7 +87,8 @@ class CacheSubscriberTest extends PHPUnit_Framework_TestCase
 
         $originalResponse = $client->get('http://httpbin.org/get');
 
-        $client->getEmitter()->on('before', function () {
+        $emitter = $client->getEmitter();
+        $emitter->on('before', function () {
             $this->assertTrue(false);
         });
 
