@@ -2,7 +2,7 @@ Guzzle Cache Subscriber
 =======================
 
 [![Build Status](https://img.shields.io/travis/EmanueleMinotto/guzzle-cache-subscriber.svg?style=flat)](https://travis-ci.org/EmanueleMinotto/guzzle-cache-subscriber)
-[![SensioLabs Insight](https://img.shields.io/sensiolabs/i/xxx.svg?style=flat)](https://insight.sensiolabs.com/projects/xxx)
+[![SensioLabs Insight](https://img.shields.io/sensiolabs/i/82e72a03-fc5f-4537-8e90-c30dc64307b9.svg?style=flat)](https://insight.sensiolabs.com/projects/82e72a03-fc5f-4537-8e90-c30dc64307b9)
 [![Coverage Status](https://img.shields.io/coveralls/EmanueleMinotto/guzzle-cache-subscriber.svg?style=flat)](https://coveralls.io/r/EmanueleMinotto/guzzle-cache-subscriber)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/EmanueleMinotto/guzzle-cache-subscriber.svg?style=flat)](https://scrutinizer-ci.com/g/EmanueleMinotto/guzzle-cache-subscriber/)
 [![Total Downloads](https://img.shields.io/packagist/dt/emanueleminotto/guzzle-cache-subscriber.svg?style=flat)](https://packagist.org/packages/emanueleminotto/guzzle-cache-subscriber)

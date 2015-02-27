@@ -6,9 +6,9 @@ php:
 - 5.6
 - hhvm
 
-# env:
-#   global:
-#     secure: FIvPhdVZv/3Pb/Lj3q+jV8K465R7xe6c27nXgkf/WtPGqIJAk8en67vhRUJIpRbRnA1sx4Uqm5YFNPO2Tw9M4sgkrwOvXjyfL9ZwK1YsIOCwfm1LubMolAm4GzmwEC0lCGd/GrcLvCej5WtQ//a565/z+t23lZbyGDWNhOfhUWE=
+env:
+  global:
+    secure: N6UFDGy6Rwm+l/zYtOvahgKRYx3QJyd4y6Iz9Q0D8bnthJIY1RkFRn3jiFrEZh+BcZNAQSf1uUnPHqN18hJ8Ay26Q7Lj6zWh5iNfKhpm6cY0tOOoECa1wOaJNc7YStq8/PupKTz0+vtPYsYXskyXsl4FyL9nUzoaVnYkCs2og2A=
 
 before_script:
 - composer require satooshi/php-coveralls:~0.6 --dev
