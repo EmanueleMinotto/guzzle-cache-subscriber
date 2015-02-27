@@ -18,6 +18,13 @@ use PHPUnit_Framework_TestCase;
 class CacheSubscriberTest extends PHPUnit_Framework_TestCase
 {
     /**
+     * Guzzle 4/5 client.
+     *
+     * @var Client
+     */
+    private $client;
+
+    /**
      * Attributes initialization before every test.
      *
      * @return void

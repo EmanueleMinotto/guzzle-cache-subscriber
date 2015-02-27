@@ -18,6 +18,20 @@ use GuzzleHttp\Subscriber\Cache\Utils;
 class CacheSubscriber implements SubscriberInterface
 {
     /**
+     * Doctrine cache implementation.
+     *
+     * @var Cache
+     */
+    private $cache;
+
+    /**
+     * Guzzle 4/5 request message.
+     *
+     * @var \GuzzleHttp\Message\RequestInterface
+     */
+    private $request;
+
+    /**
      * Constructor with optional cache strategy.
      *
      * @param Cache|null $cache Doctrine cache implementation.
