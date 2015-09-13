@@ -31,7 +31,7 @@ class CacheSubscriberTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $client =& $this->client;
+        $client = &$this->client;
 
         $client = new Client();
         $subscriber = new CacheSubscriber();
