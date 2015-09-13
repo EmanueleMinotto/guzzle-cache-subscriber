@@ -75,7 +75,7 @@ class CacheSubscriber implements SubscriberInterface
     public function getEvents()
     {
         return [
-            'before' => ['onBefore', 'first'],
+            'before'   => ['onBefore', 'first'],
             'complete' => ['onComplete', 'last'],
         ];
     }
@@ -143,7 +143,7 @@ class CacheSubscriber implements SubscriberInterface
      *
      * @link https://github.com/guzzle/cache-subscriber/blob/master/src/CacheStorage.php
      *
-     * @return integer
+     * @return int
      */
     private function getTtl(ResponseInterface $response)
     {
